@@ -6,7 +6,7 @@ import netifaces as netif
 
 from lib.respondd import Respondd
 import lib.helper
-
+import lib.gpsd_client
 
 class Nodeinfo(Respondd):
   def __init__(self, config):
@@ -117,7 +117,10 @@ class Nodeinfo(Respondd):
       },
       'owner': {},
       'system': {},
-      'location': {},
+      'location': {
+          'latitude': lib.gpsd_client.get_gps_pos()[0],
+          'longitude': lib.gpsd_client.get_gps_pos()[1]
+          },
       'vpn': self.getVPNFlag(self._config['batman'])
     }
 
